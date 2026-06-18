@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1026" />
+  <title>四柱推命 ─ 星のうらない</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/vendor/lunar.js" defer></script>
+  <script type="module" src="js/app/main.mjs"></script>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <main class="app">
+    <!-- 入力画面 -->
+    <section id="screen-input" class="screen">
+      <h1 class="title">星のうらない<span>四柱推命</span></h1>
+      <form id="birth-form" class="card">
+        <label>お名前（任意）
+          <input type="text" id="in-name" autocomplete="off" />
+        </label>
+        <div class="row">
+          <label>年<input type="number" id="in-year" min="1900" max="2100" required /></label>
+          <label>月<input type="number" id="in-month" min="1" max="12" required /></label>
+          <label>日<input type="number" id="in-day" min="1" max="31" required /></label>
+        </div>
+        <label class="time-toggle">
+          <input type="checkbox" id="in-unknown-time" /> 出生時間はわからない
+        </label>
+        <div class="row" id="time-row">
+          <label>時<input type="number" id="in-hour" min="0" max="23" /></label>
+          <label>分<input type="number" id="in-minute" min="0" max="59" value="0" /></label>
+        </div>
+        <button type="submit" class="primary">占う</button>
+      </form>
+      <button id="open-saved" class="link">保存した鑑定をみる</button>
+    </section>
+
+    <!-- 結果画面 -->
+    <section id="screen-result" class="screen hidden">
+      <button id="back-btn" class="link">← もどる</button>
+      <div id="result-root"></div>
+      <div class="actions">
+        <button id="save-btn" class="primary">保存する</button>
+        <button id="share-btn">画像でシェア</button>
+      </div>
+    </section>
+
+    <!-- 保存一覧 -->
+    <section id="screen-saved" class="screen hidden">
+      <button id="saved-back-btn" class="link">← もどる</button>
+      <h2>保存した鑑定</h2>
+      <ul id="saved-list"></ul>
+    </section>
+  </main>
+</body>
+</html>
