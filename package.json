@@ -1,0 +1,12 @@
+{
+  "name": "shichu-suimei",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "lunar-javascript": "^1.6.12"
+  }
+}
