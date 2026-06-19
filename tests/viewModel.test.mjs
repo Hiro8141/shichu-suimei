@@ -39,3 +39,10 @@ test('レーダー入力・身強身弱・不足五行が露出される', () =>
   assert.ok(vm.strength.advice.length > 0);
   assert.ok(Array.isArray(vm.lacking));
 });
+
+test('格局・用神が露出される', () => {
+  const vm = buildViewModel(meishiki, { year: 1990, month: 6, day: 19 });
+  assert.ok(vm.kakkyoku.name.length > 0);
+  assert.ok(vm.yojin.element.length > 0);
+  assert.ok(vm.yojin.color.length > 0);
+});

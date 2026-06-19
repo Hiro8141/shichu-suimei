@@ -39,6 +39,8 @@ export function buildViewModel(meishiki, birth) {
     radarCounts: meishiki.fiveElements,
     strength: r.strength,
     lacking: r.lackingElements,
+    kakkyoku: r.kakkyoku,
+    yojin: r.yojin,
     hasHourPillar: meishiki.hasHourPillar,
   };
 }

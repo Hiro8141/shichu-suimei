@@ -1,5 +1,7 @@
 import { judgeStrength } from '../engine/shinStrength.mjs';
-import { DAY_MASTER, TEN_STAR, ELEMENT_TENDENCY, STRENGTH, ELEMENT_LACK } from './interpretations.mjs';
+import { judgeKakkyoku } from '../engine/kakkyoku.mjs';
+import { judgeYojin } from '../engine/yojin.mjs';
+import { DAY_MASTER, TEN_STAR, ELEMENT_TENDENCY, STRENGTH, ELEMENT_LACK, KAKKYOKU, YOJIN_USE } from './interpretations.mjs';
 
 function dominant(fiveElements) {
   let best = null;
@@ -29,5 +31,7 @@ export function interpret(meishiki) {
     dominantElement: { key: dom.key, ...ELEMENT_TENDENCY[dom.key] },
     strength: { level: sj.level, advice: STRENGTH[sj.level].advice },
     lackingElements,
+    kakkyoku: (() => { const k = judgeKakkyoku(meishiki); return { ...k, text: KAKKYOKU[k.name] }; })(),
+    yojin: (() => { const y = judgeYojin(meishiki); return { ...y, use: YOJIN_USE[y.level] }; })(),
   };
 }

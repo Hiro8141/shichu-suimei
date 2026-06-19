@@ -48,3 +48,16 @@ test('不足している五行のコメントが出る', () => {
   assert.ok(keys.includes('earth'));
   assert.ok(r.lackingElements.every(l => l.text.length > 0));
 });
+
+test('格局が判定される', () => {
+  const r = interpret(sampleMeishiki);
+  assert.equal(r.kakkyoku.name, '正官格');
+  assert.ok(r.kakkyoku.text.length > 0);
+});
+
+test('用神と活用文が出る', () => {
+  const r = interpret(sampleMeishiki);
+  assert.equal(r.yojin.element, 'earth');
+  assert.ok(r.yojin.color.length > 0);
+  assert.ok(r.yojin.use.length > 0);
+});
