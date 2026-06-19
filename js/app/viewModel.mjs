@@ -36,6 +36,9 @@ export function buildViewModel(meishiki, birth) {
     personality: r.dayMaster.personality,
     talents: r.talents,
     dominantElement: r.dominantElement,
+    radarCounts: meishiki.fiveElements,
+    strength: r.strength,
+    lacking: r.lackingElements,
     hasHourPillar: meishiki.hasHourPillar,
   };
 }
