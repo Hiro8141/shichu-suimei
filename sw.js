@@ -1,4 +1,4 @@
-const CACHE = 'shichu-suimei-v4';
+const CACHE = 'shichu-suimei-v5';
 const ASSETS = [
   './', './index.html', './css/style.css',
   './js/vendor/lunar.js', './js/app/main.mjs', './js/app/viewModel.mjs',
@@ -9,6 +9,7 @@ const ASSETS = [
   './js/engine/shinStrength.mjs', './js/app/radarChart.mjs',
   './js/engine/luck.mjs', './js/app/luckView.mjs',
   './js/engine/kakkyoku.mjs', './js/engine/yojin.mjs',
+  './js/engine/compatibility.mjs', './js/app/compatView.mjs',
   './js/data/interpretations.mjs', './manifest.json',
 ];
 self.addEventListener('install', e => {

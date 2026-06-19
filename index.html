@@ -52,6 +52,21 @@
         <button id="save-btn" class="primary">保存する</button>
         <button id="share-btn">画像でシェア</button>
       </div>
+      <button id="compat-btn" class="link">相性を見る</button>
+      <form id="compat-form" class="card hidden">
+        <p class="compat-q">相手の生年月日</p>
+        <div class="row">
+          <label>年<input type="number" id="cp-year" min="1900" max="2100" required /></label>
+          <label>月<input type="number" id="cp-month" min="1" max="12" required /></label>
+          <label>日<input type="number" id="cp-day" min="1" max="31" required /></label>
+        </div>
+        <div class="row">
+          <label>時<input type="number" id="cp-hour" min="0" max="23" /></label>
+          <label>分<input type="number" id="cp-minute" min="0" max="59" value="0" /></label>
+        </div>
+        <button type="submit" class="primary">相性を占う</button>
+      </form>
+      <div id="compat-root"></div>
     </section>
 
     <!-- 保存一覧 -->

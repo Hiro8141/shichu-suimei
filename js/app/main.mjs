@@ -5,6 +5,8 @@ import { shareResult } from './shareImage.mjs';
 import { radarSvg } from './radarChart.mjs';
 import { computeLuckCycles } from '../engine/luck.mjs';
 import { buildLuckView } from './luckView.mjs';
+import { compareCompatibility } from '../engine/compatibility.mjs';
+import { buildCompatView } from './compatView.mjs';
 
 const $ = sel => document.querySelector(sel);
 const screens = {
@@ -17,6 +19,7 @@ function show(name) {
 let currentVM = null;
 let currentBirth = null;
 let currentLuck = null;
+let currentMeishiki = null;
 
 function readBirth() {
   const unknown = $('#in-unknown-time').checked;
@@ -96,10 +99,27 @@ function renderResult(vm) {
   `;
 }
 
+function readPartnerBirth() {
+  const b = { year: +$('#cp-year').value, month: +$('#cp-month').value, day: +$('#cp-day').value };
+  if ($('#cp-hour').value !== '') { b.hour = +$('#cp-hour').value; b.minute = +$('#cp-minute').value || 0; }
+  return b;
+}
+
+function renderCompat(view) {
+  const stars = '★'.repeat(view.stars) + '☆'.repeat(5 - view.stars);
+  const rows = view.aspects.map(a =>
+    `<div class="compat-aspect"><span class="t">${a.title}</span>`
+    + `<span class="l">${a.label}</span><span class="n">${a.note}</span></div>`).join('');
+  $('#compat-root').innerHTML = `<div class="card section compat-result">`
+    + `<p class="compat-stars">${stars}</p>${rows}`
+    + `<p class="compat-comment">${view.comment}</p></div>`;
+}
+
 $('#birth-form').addEventListener('submit', e => {
   e.preventDefault();
   const birth = readBirth();
   const meishiki = buildMeishiki(window.Solar, birth);
+  currentMeishiki = meishiki;
   currentBirth = birth;
   currentVM = buildViewModel(meishiki, birth);
   currentLuck = buildLuckView(computeLuckCycles(window.Solar, birth, meishiki.dayMaster));
@@ -123,6 +143,13 @@ $('#save-btn').addEventListener('click', () => {
   if (currentBirth) { saveRecord({ name: currentBirth.name, birth: currentBirth }); alert('保存しました'); }
 });
 $('#share-btn').addEventListener('click', () => shareResult(currentVM, $('#result-root')));
+$('#compat-btn').addEventListener('click', () => $('#compat-form').classList.toggle('hidden'));
+$('#compat-form').addEventListener('submit', e => {
+  e.preventDefault();
+  if (!currentMeishiki) return;
+  const partner = buildMeishiki(window.Solar, readPartnerBirth());
+  renderCompat(buildCompatView(compareCompatibility(currentMeishiki, partner)));
+});
 
 function renderSaved() {
   const list = listRecords();
@@ -141,6 +168,7 @@ $('#saved-list').addEventListener('click', e => {
   if (e.target.classList.contains('del')) { deleteRecord(id); renderSaved(); }
   else if (e.target.classList.contains('open')) {
     const meishiki = buildMeishiki(window.Solar, rec.birth);
+    currentMeishiki = meishiki;
     currentBirth = rec.birth;
     currentVM = buildViewModel(meishiki, rec.birth);
     currentLuck = buildLuckView(computeLuckCycles(window.Solar, rec.birth, meishiki.dayMaster));
