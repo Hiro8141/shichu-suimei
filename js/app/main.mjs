@@ -27,6 +27,7 @@ function readBirth() {
     birth.hour = +$('#in-hour').value;
     birth.minute = +$('#in-minute').value || 0;
   }
+  birth.gender = $('#in-gender').value || null;
   return birth;
 }
 
