@@ -2,6 +2,7 @@ import { buildMeishiki } from '../engine/meishiki.mjs';
 import { buildViewModel } from './viewModel.mjs';
 import { saveRecord, listRecords, deleteRecord } from './storage.mjs';
 import { shareResult } from './shareImage.mjs';
+import { radarSvg } from './radarChart.mjs';
 
 const $ = sel => document.querySelector(sel);
 const screens = {
@@ -47,8 +48,13 @@ function renderResult(vm) {
     </div>
     <div class="card section"><h3>基本性格</h3><p>${vm.personality}</p></div>
     <div class="card section"><h3>才能・適職</h3>${talents}</div>
-    <div class="card section element-${vm.dominantElement.key}">
-      <h3>五行の傾向</h3><p>${vm.dominantElement.text}</p>
+    <div class="card section gogyou-section">
+      <h3>五行バランス & 身強身弱</h3>
+      <div class="radar">${radarSvg(vm.radarCounts)}</div>
+      <p class="strength-badge strength-${vm.strength.level}">${vm.strength.level}</p>
+      <p>${vm.strength.advice}</p>
+      <p class="dominant element-${vm.dominantElement.key}">${vm.dominantElement.text}</p>
+      ${vm.lacking.map(l => `<p class="note">${l.text}</p>`).join('')}
     </div>
     ${vm.hasHourPillar ? '' : '<p class="note">出生時間が分かるともっと詳しく占えます。</p>'}
   `;

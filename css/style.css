@@ -76,3 +76,10 @@ button.link{background:none; border:none; color:var(--muted); padding:8px 0;}
   .app{padding:40px 24px;}
   .result-head .catch{font-size:24px;}
 }
+.gogyou-section .radar{max-width:260px; margin:6px auto 12px;}
+.gogyou-section .dominant{margin-top:10px; padding-left:10px;}
+.strength-badge{display:inline-block; padding:4px 16px; border-radius:14px; font-weight:600;
+  font-size:15px; margin:4px 0 10px; border:1px solid var(--line);}
+.strength-身強{color:#ff9b6b; border-color:#ff9b6b;}
+.strength-中庸{color:#ffe9a8; border-color:#ffe9a8;}
+.strength-身弱{color:#5aa0ff; border-color:#5aa0ff;}
