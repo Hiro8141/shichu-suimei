@@ -83,3 +83,20 @@ button.link{background:none; border:none; color:var(--muted); padding:8px 0;}
 .strength-身強{color:#ff9b6b; border-color:#ff9b6b;}
 .strength-中庸{color:#ffe9a8; border-color:#ffe9a8;}
 .strength-身弱{color:#5aa0ff; border-color:#5aa0ff;}
+
+.luck-section .daiun{border:1px solid var(--line); border-radius:10px; margin:8px 0; overflow:hidden;}
+.luck-section .daiun.cur{border-color:var(--gold);}
+.daiun-head{display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+  background:rgba(255,255,255,.04); border:none; border-radius:0; padding:10px 12px; color:var(--ink);}
+.daiun.cur .daiun-head{background:rgba(255,233,168,.12);}
+.daiun-head .gz{font-size:18px; font-weight:600; color:var(--gold);}
+.daiun-head .age{font-size:12px; color:var(--muted);}
+.daiun-head .ts{margin-left:auto; font-size:13px;}
+.daiun-body{padding:8px 12px 12px;}
+.daiun-body .ft{margin:4px 0 10px; font-size:13px; line-height:1.7;}
+.nenun{list-style:none; padding:0; margin:0;}
+.nenun li{display:grid; grid-template-columns:auto auto 1fr; gap:8px; align-items:baseline;
+  padding:6px 0; border-top:1px solid var(--line); font-size:12px;}
+.nenun li.cur{color:var(--gold);}
+.nenun .gz{font-weight:600;}
+.nenun .ft{color:var(--muted); font-size:11px;}

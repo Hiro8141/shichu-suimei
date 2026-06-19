@@ -3,6 +3,8 @@ import { buildViewModel } from './viewModel.mjs';
 import { saveRecord, listRecords, deleteRecord } from './storage.mjs';
 import { shareResult } from './shareImage.mjs';
 import { radarSvg } from './radarChart.mjs';
+import { computeLuckCycles } from '../engine/luck.mjs';
+import { buildLuckView } from './luckView.mjs';
 
 const $ = sel => document.querySelector(sel);
 const screens = {
@@ -14,6 +16,7 @@ function show(name) {
 
 let currentVM = null;
 let currentBirth = null;
+let currentLuck = null;
 
 function readBirth() {
   const unknown = $('#in-unknown-time').checked;
@@ -29,6 +32,25 @@ function readBirth() {
   }
   birth.gender = $('#in-gender').value || null;
   return birth;
+}
+
+function renderLuckSection(luckView) {
+  if (!luckView) {
+    return `<div class="card section luck-section"><h3>大運・年運</h3>`
+      + `<p class="note">性別を選ぶと大運・年運が見られます。</p></div>`;
+  }
+  const items = luckView.daYun.map((d) => {
+    const nen = d.liuNian.map(y =>
+      `<li class="${y.isCurrent ? 'cur' : ''}"><span class="gz">${y.year} ${y.ganZhi}</span>`
+      + `<span class="ts">${y.tenStar}</span><span class="ft">${y.fortune}</span></li>`).join('');
+    return `<div class="daiun ${d.isCurrent ? 'cur' : ''}">`
+      + `<button type="button" class="daiun-head" aria-expanded="${d.isCurrent}">`
+      + `<span class="gz">${d.ganZhi}</span><span class="age">${d.ageLabel}</span>`
+      + `<span class="ts">${d.tenStar}</span></button>`
+      + `<div class="daiun-body ${d.isCurrent ? '' : 'hidden'}">`
+      + `<p class="ft">${d.fortune}</p><ul class="nenun">${nen}</ul></div></div>`;
+  }).join('');
+  return `<div class="card section luck-section"><h3>大運・年運</h3>${items}</div>`;
 }
 
 function renderResult(vm) {
@@ -57,6 +79,7 @@ function renderResult(vm) {
       <p class="dominant element-${vm.dominantElement.key}">${vm.dominantElement.text}</p>
       ${vm.lacking.map(l => `<p class="note">${l.text}</p>`).join('')}
     </div>
+    ${renderLuckSection(currentLuck)}
     ${vm.hasHourPillar ? '' : '<p class="note">出生時間が分かるともっと詳しく占えます。</p>'}
   `;
 }
@@ -67,6 +90,7 @@ $('#birth-form').addEventListener('submit', e => {
   const meishiki = buildMeishiki(window.Solar, birth);
   currentBirth = birth;
   currentVM = buildViewModel(meishiki, birth);
+  currentLuck = buildLuckView(computeLuckCycles(window.Solar, birth, meishiki.dayMaster));
   renderResult(currentVM);
   show('result');
 });
@@ -76,6 +100,13 @@ $('#in-unknown-time').addEventListener('change', e => {
 });
 
 $('#back-btn').addEventListener('click', () => show('input'));
+$('#result-root').addEventListener('click', e => {
+  const head = e.target.closest('.daiun-head');
+  if (!head) return;
+  const body = head.nextElementSibling;
+  const hidden = body.classList.toggle('hidden');
+  head.setAttribute('aria-expanded', String(!hidden));
+});
 $('#save-btn').addEventListener('click', () => {
   if (currentBirth) { saveRecord({ name: currentBirth.name, birth: currentBirth }); alert('保存しました'); }
 });
@@ -100,6 +131,7 @@ $('#saved-list').addEventListener('click', e => {
     const meishiki = buildMeishiki(window.Solar, rec.birth);
     currentBirth = rec.birth;
     currentVM = buildViewModel(meishiki, rec.birth);
+    currentLuck = buildLuckView(computeLuckCycles(window.Solar, rec.birth, meishiki.dayMaster));
     renderResult(currentVM); show('result');
   }
 });
