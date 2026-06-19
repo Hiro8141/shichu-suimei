@@ -5,9 +5,9 @@ import { buildViewModel } from '../js/app/viewModel.mjs';
 const meishiki = {
   dayMaster: '庚', hasHourPillar: false,
   pillars: {
-    year:  { stem: '庚', branch: '午', tenStar: '比肩', twelveStage: '沐浴' },
-    month: { stem: '壬', branch: '午', tenStar: '食神', twelveStage: '沐浴' },
-    day:   { stem: '庚', branch: '申', tenStar: null,   twelveStage: '建禄' },
+    year:  { stem: '庚', branch: '午', hiddenStems: ['丁','己'], tenStar: '比肩', twelveStage: '沐浴' },
+    month: { stem: '壬', branch: '午', hiddenStems: ['丁','己'], tenStar: '食神', twelveStage: '沐浴' },
+    day:   { stem: '庚', branch: '申', hiddenStems: ['庚','壬','戊'], tenStar: null,   twelveStage: '建禄' },
     hasHourPillar: false,
   },
   fiveElements: { wood: 0, fire: 2, earth: 0, metal: 3, water: 1 },
