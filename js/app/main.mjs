@@ -79,6 +79,18 @@ function renderResult(vm) {
       <p class="dominant element-${vm.dominantElement.key}">${vm.dominantElement.text}</p>
       ${vm.lacking.map(l => `<p class="note">${l.text}</p>`).join('')}
     </div>
+    <div class="card section kakkyoku-section element-${vm.yojin.element}">
+      <h3>格局・用神</h3>
+      <p class="kakkyoku-name">${vm.kakkyoku.name}</p>
+      <p>${vm.kakkyoku.text}</p>
+      <div class="yojin-grid">
+        <div><span class="lbl">用神</span><span class="val">${vm.yojin.elementName}</span></div>
+        <div><span class="lbl">ラッキーカラー</span><span class="val">${vm.yojin.color}</span></div>
+        <div><span class="lbl">吉方位</span><span class="val">${vm.yojin.direction}</span></div>
+        <div><span class="lbl">相性</span><span class="val">${vm.yojin.affinity}</span></div>
+      </div>
+      <p class="yojin-use">${vm.yojin.use}</p>
+    </div>
     ${renderLuckSection(currentLuck)}
     ${vm.hasHourPillar ? '' : '<p class="note">出生時間が分かるともっと詳しく占えます。</p>'}
   `;
